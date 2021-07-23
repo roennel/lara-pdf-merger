@@ -1,22 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LynX39\LaraPdfMerger;
 
 use Exception;
 use TCPDI;
-
-require_once('tcpdf/tcpdf.php');
-require_once('tcpdf/tcpdi.php');
 
 class PdfManage
 {
     private $_files;    //['form.pdf']  ["1,2,4, 5-19"]
     private $_fpdi;
 
-    public function init(){
+    public function init()
+    {
         $this->_files = null;
 
-        $this->_fpdi = new TCPDI;
+        $this->_fpdi = new TCPDI();
         $this->_fpdi->setPrintHeader(false);
         $this->_fpdi->setPrintFooter(false);
 
@@ -37,7 +37,7 @@ class PdfManage
                 $pages = $this->_rewritepages($pages);
             }
 
-            $this->_files[] = array($filepath, $pages, $orientation);
+            $this->_files[] = [$filepath, $pages, $orientation];
         } else {
             throw new Exception("Could not locate PDF on '$filepath'");
         }
@@ -53,7 +53,7 @@ class PdfManage
      * @throws Exception
      * @array $meta [title => $title, author => $author, subject => $subject, keywords => $keywords, creator => $creator]
      */
-    private function doMerge($orientation = null, $meta = [], $duplex=false)
+    private function doMerge($orientation = null, $meta = [], $duplex=false): void
     {
         if (!isset($this->_files) || !is_array($this->_files)) {
             throw new Exception("No PDFs to merge.");
@@ -78,9 +78,11 @@ class PdfManage
                     $template = $this->_fpdi->importPage($i);
                     $size = $this->_fpdi->getTemplateSize($template);
 
-                    if ($orientation == null) $fileorientation = $size['w'] < $size['h'] ? 'P' : 'L';
+                    if ($orientation == null) {
+                        $fileorientation = $size['w'] < $size['h'] ? 'P' : 'L';
+                    }
 
-                    $this->_fpdi->AddPage($fileorientation, array($size['w'], $size['h']));
+                    $this->_fpdi->AddPage($fileorientation, [$size['w'], $size['h']]);
                     $this->_fpdi->useTemplate($template);
                 }
             } else {
@@ -90,11 +92,12 @@ class PdfManage
                     }
                     $size = $this->_fpdi->getTemplateSize($template);
 
-                    if ($orientation == null) $fileorientation = $size['w'] < $size['h'] ? 'P' : 'L';
+                    if ($orientation == null) {
+                        $fileorientation = $size['w'] < $size['h'] ? 'P' : 'L';
+                    }
 
-                    $this->_fpdi->AddPage($fileorientation, array($size['w'], $size['h']));
+                    $this->_fpdi->AddPage($fileorientation, [$size['w'], $size['h']]);
                     $this->_fpdi->useTemplate($template);
-
                 }
             }
             if ($duplex && $this->_fpdi->PageNo() % 2) {
@@ -111,7 +114,8 @@ class PdfManage
      *
      * @throws \Exception if there are no PDFs to merge
      */
-    public function merge($orientation = null, $meta = []) {
+    public function merge($orientation = null, $meta = []): void
+    {
         $this->doMerge($orientation, $meta, false);
     }
 
@@ -123,7 +127,8 @@ class PdfManage
      *
      * @throws \Exception if there are no PDFs to merge
      */
-    public function duplexMerge($orientation = null, $meta = []) {
+    public function duplexMerge($orientation = null, $meta = []): void
+    {
         $this->doMerge($orientation, $meta, true);
     }
 
@@ -141,8 +146,6 @@ class PdfManage
                 throw new Exception("Error outputting PDF to '$outputmode'.");
             }
         }
-
-
     }
 
     /**
@@ -152,8 +155,7 @@ class PdfManage
      */
     private function _switchmode($mode)
     {
-        switch(strtolower($mode))
-        {
+        switch (strtolower($mode)) {
             case 'download':
                 return 'D';
                 break;
@@ -221,6 +223,5 @@ class PdfManage
                 $this->_fpdi->$metodName($arg);
             }
         }
-    } 
-
+    }
 }

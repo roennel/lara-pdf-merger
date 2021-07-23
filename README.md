@@ -2,40 +2,30 @@
 
 Drop-in replacement for the original package from [deltaaskii/lara-pdf-merger](https://github.com/deltaaskii/lara-pdf-merger) that works under *PHP 7.4*
 
-
 Original written by http://pdfmerger.codeplex.com/team/view
 
-This Package was tested on **Laravel 7.0**
+This Package was tested on **Laravel 8.0** and is no longer compatible with Laravel < 5.8 due to deferred provider changes
 
-### Improvements 
+### Improvements
 
 * Code source refactoring
 * Enabling the Facade use
 * Adding duplex merge feature
-* Seperate save operation from the merge
-  
+* Separate save operation from the merge
+
 ## Installation
 
 * Require this package in your composer.json by adding those lines
 
-```
-composer require daltcore/lara-pdf-merger
+```bash
+composer require mobi-market/lara-pdf-merger
 ```
 
 * Run  this commend in your terminal
 ```bash
 composer update
 ```
-### Laravel <5.5:
 
-After updating composer, add the ServiceProvider to the providers array in config/app.php
-```php
-    LynX39\LaraPdfMerger\PdfMergerServiceProvider::class,
-```
-You can optionally use the facade for shorter code. Add this to your facades:
-```php
-    'PdfMerger' => LynX39\LaraPdfMerger\Facades\PdfMerger::class,
-```
 ## Usage
 
 ```php
@@ -59,7 +49,7 @@ $pdfMerger->merge(); //For a normal merge (No blank page added)
 // OR..
 $pdfMerger->duplexMerge(); //Merges your provided PDFs and adds blank pages between documents as needed to allow duplex printing
 
-// optional parameter can be passed to the merge functions for orientation (P for protrait, L for Landscape). 
+// optional parameter can be passed to the merge functions for orientation (P for portrait, L for Landscape).
 // This will be used for every PDF that doesn't have an orientation specified
 
 $pdfMerger->save("file_path.pdf");

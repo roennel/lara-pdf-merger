@@ -1,8 +1,16 @@
 {
-    "name": "daltcore/lara-pdf-merger",
+    "name": "mobi-market/lara-pdf-merger",
     "description": "",
-    "keywords": ["merger","merge","pdf","manage","paginate", "laravel", "duplex merge"],
-    "license" : [
+    "keywords": [
+        "merger",
+        "merge",
+        "pdf",
+        "manage",
+        "paginate",
+        "laravel",
+        "duplex merge"
+    ],
+    "license": [
         "MIT"
     ],
     "authors": [
@@ -10,20 +18,27 @@
             "name": "Michael Musso",
             "email": "lynx@deltaaskii.com",
             "homepage": "https://github.com/LynX39"
-        }, {
+        },
+        {
             "name": "Ramon Smit",
             "email": "rsmit@daltcore.com",
             "homepage": "https://github.com/daltcore"
-        }, {
+        },
+        {
             "name": "Marouan Sami",
             "email": "sami.marwen.isetcom@gmail.com",
             "homepage": "https://github.com/MarwenSami"
         }
     ],
     "require": {
-        "php" : ">=5.4"
+        "php": "^7.4|^8.0",
+        "andreaventuri/tcpdi": "^1.0",
+        "illuminate/support": ">=5.8 <9.0"
     },
-    "homepage" : "https://github.com/MarwenSami/lara-pdf-merger",
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.0"
+    },
+    "homepage": "https://github.com/MarwenSami/lara-pdf-merger",
     "autoload": {
         "psr-0": {
             "LynX39\\LaraPdfMerger": "src/"
@@ -38,5 +53,12 @@
                 "PdfMerger": "LynX39\\LaraPdfMerger\\Facades\\PdfMerger"
             }
         }
-    }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
